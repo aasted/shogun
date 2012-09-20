@@ -167,6 +167,14 @@ public:
 		return m_max_num_iter;
 	}
 
+    /** save the tree to an open file
+     * @param modelfl
+     */
+    void save_tree(FILE* modelfl);
+
+    /** print the tree to stdout (sugar for save(stdout)) */
+    void print_tree();
+
 	/** train machine
 	 *
 	 * @param data training data (parameter can be avoided if distance or
@@ -218,6 +226,9 @@ protected:
 	void enforce_balance_constraints_upper(SGVector<int32_t> &mu, SGVector<float64_t> &delta_neg, SGVector<float64_t> &delta_pos, int32_t B_prime, SGVector<float64_t>& xi_neg_class);
 	/** enforce balance constraints lower */
 	void enforce_balance_constraints_lower(SGVector<int32_t> &mu, SGVector<float64_t> &delta_neg, SGVector<float64_t> &delta_pos, int32_t B_prime, SGVector<float64_t>& xi_neg_class);
+
+    /** walk the tree printing node parameters */
+	void save_walker(FILE* modelfl, node_t *node, int depth);
 
 	/** maximum number of iterations */
 	int32_t m_max_num_iter;

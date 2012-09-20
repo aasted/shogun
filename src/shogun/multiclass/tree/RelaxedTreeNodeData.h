@@ -35,6 +35,20 @@ struct RelaxedTreeNodeData
 				SG_SPRINT("%4d", i);
 		SG_SPRINT(")\n");
 	}
+
+	/** print data to a file handle*/
+    static void save_data(FILE* modelfl, const RelaxedTreeNodeData &data)
+    {
+        fprintf(modelfl, "left=(");
+        for (int32_t i=0; i < data.mu.vlen; ++i)
+        if (data.mu[i] == -1 || data.mu[i] == 0)
+            fprintf(modelfl, "%4d", i);
+        fprintf(modelfl, "), right=(");
+        for (int32_t i=0; i < data.mu.vlen; ++i)
+            if (data.mu[i] == 1 || data.mu[i] == 0)
+                fprintf(modelfl, "%4d", i);
+        fprintf(modelfl, ")\n");
+    }
 };
 
 } /* shogun */ 

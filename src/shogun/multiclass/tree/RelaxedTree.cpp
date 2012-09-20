@@ -8,6 +8,7 @@
  * Copyright (C) 2012 Chiyuan Zhang
  */
 
+#include <cstdio>
 #include <limits>
 #include <queue>
 #include <algorithm>
@@ -208,6 +209,39 @@ bool CRelaxedTree::train_machine(CFeatures* data)
 	//m_root->debug_print(RelaxedTreeNodeData::print_data);
 
 	return true;
+}
+
+void CRelaxedTree::print_tree()
+{
+    save_tree(stdout);
+}
+
+void CRelaxedTree::save_tree(FILE* modelfl)
+{
+    if (!m_root) {
+        fprintf(modelfl, "Tried to save an Empty tree!");
+        return;
+    } else {
+        save_walker(modelfl, m_root, 0);
+    }
+}
+
+void CRelaxedTree::save_walker(FILE* modelfl, node_t *node, int depth)
+{
+    if (!node) {
+        fprintf(modelfl, "null");
+        return;
+    }
+    fprintf(modelfl, "{\t\"classes\":\"");
+    RelaxedTreeNodeData::save_data(modelfl, node->data);
+    fprintf(modelfl, "\",\t\"machine\":\"");
+    CSVM *svm = (CSVM *)m_machines->get_element(node->machine());
+    svm->save(modelfl);
+    fprintf(modelfl, "\",\t\"L\":");
+    save_walker(modelfl, node->left(), depth + 1);
+    fprintf(modelfl, ",\t\"R\":");
+    save_walker(modelfl, node->right(), depth + 1);
+    fprintf(modelfl,"}");
 }
 
 CRelaxedTree::node_t *CRelaxedTree::train_node(const SGMatrix<float64_t> &conf_mat, SGVector<int32_t> classes)
