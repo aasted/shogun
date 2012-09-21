@@ -35,6 +35,21 @@ CLinearKernel::~CLinearKernel()
 	cleanup();
 }
 
+#include <typeinfo>
+CSGObject *CLinearKernel::shallow_copy() const
+{
+	// TODO: remove this after all the classes get shallow_copy properly implemented
+	// this assert is to avoid any subclass of CGaussianKernel accidentally called
+	// with the implement here
+	ASSERT(typeid(*this) == typeid(CLinearKernel));
+	CLinearKernel *ker = new CLinearKernel();
+	if (lhs)
+	{
+		ker->init(lhs, rhs);
+	}
+	return ker;
+}
+
 bool CLinearKernel::init(CFeatures* l, CFeatures* r)
 {
 	CDotKernel::init(l, r);

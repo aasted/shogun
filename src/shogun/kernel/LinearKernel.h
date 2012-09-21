@@ -46,6 +46,9 @@ class CLinearKernel: public CDotKernel
 
 		virtual ~CLinearKernel();
 
+		/** Make a shallow copy of the kernel */
+		virtual CSGObject *shallow_copy() const;
+
 		/** initialize kernel
 		 *
 		 * @param l features of left-hand side
