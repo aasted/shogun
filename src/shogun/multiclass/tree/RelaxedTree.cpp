@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <functional>
 
+#include <shogun/io/AsciiFile.h>
 #include <shogun/labels/BinaryLabels.h>
 #include <shogun/multiclass/tree/RelaxedTreeUtil.h>
 #include <shogun/multiclass/tree/RelaxedTree.h>
@@ -237,6 +238,9 @@ void CRelaxedTree::save_walker(FILE* modelfl, node_t *node, int depth)
     fprintf(modelfl, "\",\t\"machine\":\"");
     CSVM *svm = (CSVM *)m_machines->get_element(node->machine());
     svm->save(modelfl);
+    fprintf(modelfl, "\",\t\"kernel\":\"");
+    CAsciiFile modelfl_wrapper(modelfl);
+    svm->get_kernel()->save(&modelfl_wrapper);
     fprintf(modelfl, "\",\t\"L\":");
     save_walker(modelfl, node->left(), depth + 1);
     fprintf(modelfl, ",\t\"R\":");
