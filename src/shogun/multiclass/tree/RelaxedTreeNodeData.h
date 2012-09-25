@@ -11,14 +11,24 @@
 #ifndef RELAXEDTREENODEDATA_H__
 #define RELAXEDTREENODEDATA_H__
 
+#include <shogun/base/SGObject.h>
+#include <shogun/base/Parameter.h>
 #include <shogun/lib/SGVector.h>
 
 namespace shogun
 {
 
 /** Data for the tree nodes in a RelaxedTree */
-struct RelaxedTreeNodeData
+class RelaxedTreeNodeData: public CSGObject
 {
+public:
+    /** constructor */
+    RelaxedTreeNodeData()
+        :mu(NULL)
+    {
+        SG_ADD(&mu, "mu", "Vector of class labels", MS_NOT_AVAILABLE);
+    }
+
 	/** mu */
 	SGVector<int32_t> mu;
 

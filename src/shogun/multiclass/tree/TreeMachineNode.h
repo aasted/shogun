@@ -13,6 +13,7 @@
 
 #include <shogun/base/SGObject.h>
 #include <shogun/base/Parameter.h>
+#include <shogun/io/SerializableFile.h>
 
 namespace shogun
 {
@@ -40,6 +41,14 @@ public:
 		SG_UNREF(m_left);
 		SG_UNREF(m_right);
 	}
+
+    /** Print our custom data if it exists for serialization **/
+	bool save_serializable(CSerializableFile* file,
+			const char* prefix, int32_t param_version)
+    {
+        CSGObject::save_serializable(file, prefix, param_version);
+        data->save_serializable(file, prefix, param_version);
+    }
 
     /** get name */
     virtual const char* get_name() const { return "TreeMachineNode"; }
