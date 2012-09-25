@@ -28,7 +28,7 @@ struct RelaxedTreeNodeData
 							const char* prefix, int32_t param_version)
 	{
 	    printf("%s", prefix);
-	    print_data(this);
+	    print_data(*this);
 	    return true;
 	}
 
