@@ -19,18 +19,17 @@ namespace shogun
 {
 
 /** Data for the tree nodes in a RelaxedTree */
-class RelaxedTreeNodeData: public CSGObject
+struct RelaxedTreeNodeData
 {
-public:
-    /** constructor */
-    RelaxedTreeNodeData()
-        :mu(NULL)
-    {
-        SG_ADD(&mu, "mu", "Vector of class labels", MS_NOT_AVAILABLE);
-    }
-
 	/** mu */
 	SGVector<int32_t> mu;
+
+	bool save_serializable(CSerializableFile* file,
+							const char* prefix, int32_t param_version)
+	{
+		//No commit to upstream
+		return mu.save_serializable(file, prefix, param_version);
+	}
 
 	/** print data */
 	static void print_data(const RelaxedTreeNodeData &data)
