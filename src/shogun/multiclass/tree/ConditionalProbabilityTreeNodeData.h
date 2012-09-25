@@ -28,6 +28,14 @@ struct ConditionalProbabilityTreeNodeData
 	{
 	}
 
+    /** save serializable hack **/
+    bool save_serializable(CSerializableFile* file,
+    			const char* prefix, int32_t param_version)
+    {
+       // NOCOMMIT TO UPSTREAM
+       return true;
+    }
+
 	/** print data */
 	static void print_data(const ConditionalProbabilityTreeNodeData &data)
 	{

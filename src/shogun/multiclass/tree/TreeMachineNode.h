@@ -46,8 +46,11 @@ public:
 	bool save_serializable(CSerializableFile* file,
 			const char* prefix, int32_t param_version)
     {
-        CSGObject::save_serializable(file, prefix, param_version);
-        data->save_serializable(file, prefix, param_version);
+        if (CSGObject::save_serializable(file, prefix, param_version)) {
+           return data.save_serializable(file, prefix, param_version);
+        } else {
+           return false;
+        }
     }
 
     /** get name */
