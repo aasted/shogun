@@ -1643,7 +1643,8 @@ TParameter::print(const char* prefix)
 	if (m_datatype.m_ptype == PT_SGOBJECT
 		&& m_datatype.m_stype == ST_NONE
 		&& m_datatype.m_ctype == CT_SCALAR
-		&& *(CSGObject**) m_parameter != NULL) {
+		&& *(CSGObject**) m_parameter != NULL
+		&& m_name && strcmp(m_name, "m_parent")) {
 		char* p = new_prefix(prefix, m_name);
 		(*(CSGObject**) m_parameter)->print_serializable(p);
 		delete p;
@@ -2066,6 +2067,8 @@ TParameter::save_stype(CSerializableFile* file, const void* param,
 	SGSparseVector<char>* spr_ptr = (SGSparseVector<char>*) param;
 	index_t len_real;
 
+	if (m_name && strcmp(m_name, "m_parent")==0)
+	    return true;
 	switch (m_datatype.m_stype) {
 	case ST_NONE:
 		if (!save_ptype(file, param, prefix)) return false;
