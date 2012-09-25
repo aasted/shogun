@@ -27,8 +27,9 @@ struct RelaxedTreeNodeData
 	bool save_serializable(CSerializableFile* file,
 							const char* prefix, int32_t param_version)
 	{
-		//No commit to upstream
-		return mu.save_serializable(file, prefix, param_version);
+	    printf("%s", prefix);
+	    print_data(this);
+	    return true;
 	}
 
 	/** print data */
